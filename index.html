@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, maximum-scale=1, target-densityDPI=device-dpi"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<title>Certificate JS Storage</title>
+		<link media="all" rel="stylesheet" href="css/style.css" type="text/css" />
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" type="text/css" href="css/lte9.css" media="screen"/>
+		<![endif]-->
+	</head>
+	<body>
+		<div id="cert-storage" class="cert wrapper cert--show">
+			<section class="action-area panel">
+				<div id="cert__list-container" class="listarea">
+					<ul class="cert__list">
+						<li class="active">Иванов Иван Иванович</li>
+						<li>Петров Петр Петрович</li>
+						<li>Сидоров Сидор Сидорович</li>
+					</ul>
+				</div>
+				<div id="cert__add" class="buttonsarea">
+					<button id="add-certificate" class="button cert__status-show">Добавить</button>
+					<button id="cancel-certificate" class="button cert__status-add">Отменить</button>
+					<input type="file" class="add_input cert__status-add" name="file">
+				</div>
+			</section>
+			<section id="cert__info" class="output panel panel__out cert__status-show" placeholder="Выберите сертификат для просмотра информации"></section>
+			<section id="cert__load" class="load panel panel__out cert__status-add" placeholder="Перетащите файл сертификата в это поле"></section>
+		</div>
+		<div class="message"></div>
+		<script src="js/asn1js/int10.js" defer></script>
+		<script src="js/asn1js/asn1.js" defer></script>
+		<script src="js/app.js" defer></script>
+	</body>
+</html>

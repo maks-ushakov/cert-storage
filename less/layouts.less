@@ -1,0 +1,37 @@
+.wrapper {
+	display: flex;
+	justify-content: space-between;
+	height: 100vh;
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 40px 0;
+	box-sizing: border-box;
+}
+
+.panel {
+	flex: 1;
+}
+
+.panel__out {
+	padding: 4px 6px;
+	&:empty::before {
+		content: attr(placeholder);
+		display: block;
+		color: @mute-color;
+		text-align: center;
+	}
+}
+
+.action-area {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.listarea {
+	flex: 1;
+}
+
+.buttonsarea {
+	padding: 40px 0;
+}
+

@@ -1,0 +1,18 @@
+.cert__list {
+	max-width: 80%;
+	li {
+		border: 1px solid @list-border-color;
+		padding: 10px;
+		position: relative;
+		&:not(:last-child) {
+			border-bottom: none;
+		}
+		&.active {
+			background: @list-bg-color;
+			padding-right: 30px;
+			&::after {
+				content: '';
+			}
+		}
+	}
+}
