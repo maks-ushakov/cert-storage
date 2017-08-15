@@ -1,15 +1,15 @@
 (function(undefined){
 	function CertStorage () {
 		this.keys = [];
-		this.load();
 		this.keys.sort();
-	};
+	}
 
-	CertStorage.prototype.load = function () {
+	CertStorage.prototype.load = function (callback) {
 		for(var i = 0; i < localStorage.length; i++) {
 			this.keys[i] = localStorage.key(i);		
-			}
-	}
+		}
+		callback(null,this.keys);
+	};
 	CertStorage.prototype.add = function (file, filebody) {
 		console.log(file, filebody);
 
@@ -28,22 +28,20 @@
 	function CertStorageView (infobox) {
 		this.out = infobox;
 	}
-	CertStorageView.prototype.render = function () {
+	CertStorageView.prototype.renderList = function () {
 		
-	}
+	};
 	window.CertStorageView = CertStorageView;
 })();
-function switchStatus(oldstatus, newstatus, target) {
-	return function (e) {
-		target.classList.add('cert--' + newstatus);
-		target.classList.remove('cert--' + oldstatus);
-	};
-}
+
+
 
 window.addEventListener('load', function () {
 	// Mediator
 	var app = document.getElementById('cert-storage');
 	var certStorage = new CertStorage();
+	var view = new CertStorageView(app.querySelector('#cert__info'));
+	certStorage.load(view.renderList);
 
 	// Buttons
 	app.querySelector('#add-certificate').addEventListener('click', switchStatus('show','add', app), false);
@@ -57,6 +55,10 @@ window.addEventListener('load', function () {
 	loadbox.addEventListener("dragenter", dragenter, false);
 	loadbox.addEventListener("dragover", dragover, false);
 	loadbox.addEventListener("drop", drop, false);
+
+
+	var list = document.getElementById('cert__list-container');
+	list.addEventListener('click', listHandler ,false);
 
 	function dragenter(e) {
 		  e.stopPropagation();
@@ -78,17 +80,37 @@ window.addEventListener('load', function () {
 		  read(files[0]);
 	}
 
+
+	function switchStatus(oldstatus, newstatus, target) {
+		return function (e) {
+			target.classList.add('cert--' + newstatus);
+			target.classList.remove('cert--' + oldstatus);
+		};
+	}
+
 	function read(file) {
 		var reader = new FileReader();
 		reader.onloadend = function () {
- if (reader.error)
-            console.error("Your browser couldn't read the specified file (error code " + r.error.code + ").");
-        else {
-			certStorage.add(file, reader.result);
-			switchStatus('add', 'show', app)();
-		}
+			if (reader.error)
+				console.error("Your browser couldn't read the specified file (error code " + r.error.code + ").");
+			else {
+				certStorage.add(file, reader.result);
+				switchStatus('add', 'show', app)();
+			}
 		};
 		reader.readAsBinaryString(file);
+	}
+
+	function listHandler(e) {
+		var target = e.target;
+		var parent = e.currentTarget;
+		if(target.tagName == 'LI') {
+			var oldActive =	this.querySelector('.active');
+			if(oldActive)
+				oldActive.classList.remove('active');
+			target.classList.add('active');
+			view.out.innerHTML = '<p>' + target.dataset.key + '</p>'
+		}
 	}
 
 }, false);
