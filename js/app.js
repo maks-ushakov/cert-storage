@@ -21,14 +21,28 @@
 		}
 	};
 
+	CertStorage.prototype.getInfo = function (key) {
+		return localStorage.getItem(key);
+	};
+
 	window.CertStorage = CertStorage;
 })();
 
 (function(undefined) {
-	function CertStorageView (infobox) {
-		this.out = infobox;
+	function CertStorageView (source, option) {
+		this.option = Object.assign({}, option);
+		this.source = source;
 	}
+	
 	CertStorageView.prototype.renderList = function () {
+		var list = this.option.list;
+		var listItem;
+		this.source.keys.forEach(function (item) {
+			listItem = document.createElement('li');
+			listItem.innerHTML = item;
+			listItem.dataset.key = item;
+			list.append(listItem);
+		});
 		
 	};
 	window.CertStorageView = CertStorageView;
@@ -40,8 +54,10 @@ window.addEventListener('load', function () {
 	// Mediator
 	var app = document.getElementById('cert-storage');
 	var certStorage = new CertStorage();
-	var view = new CertStorageView(app.querySelector('#cert__info'));
-	certStorage.load(view.renderList);
+	var view = new CertStorageView(certStorage ,{
+		out: app.querySelector('#cert__info'),
+		list: app.querySelector('#cert__list-container ul')});
+	certStorage.load(view.renderList.bind(view));
 
 	// Buttons
 	app.querySelector('#add-certificate').addEventListener('click', switchStatus('show','add', app), false);
@@ -109,7 +125,7 @@ window.addEventListener('load', function () {
 			if(oldActive)
 				oldActive.classList.remove('active');
 			target.classList.add('active');
-			view.out.innerHTML = '<p>' + target.dataset.key + '</p>'
+			view.option.out.innerHTML = '<p>' + certStorage.getInfo(target.dataset.key) + '</p>'
 		}
 	}
 
