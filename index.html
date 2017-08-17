@@ -16,9 +16,6 @@
 			<section class="action-area panel">
 				<div id="cert__list-container" class="listarea">
 					<ul class="cert__list">
-						<li data-key="Ivanov_Ivan_Ivanovich.cer">Иванов Иван Иванович</li>
-						<li data-key="Petrov_Petr_Petrovich.cer">Петров Петр Петрович</li>
-						<li data-key="Sidorov_Sidor_Sidorovich.cer">Сидоров Сидор Сидорович</li>
 					</ul>
 				</div>
 				<div id="cert__add" class="buttonsarea">
@@ -35,6 +32,17 @@
 		<script src="js/asn1js/int10.js" defer></script>
 		<script src="js/asn1js/asn1.js" defer></script>
 		<script src="js/certificate.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js" defer></script>
 		<script src="js/app.js" defer></script>
+		<script id="list-template" type="text/x-handlebars-template">
+		
+		</script>
+		<script id="info-template" type="text/x-handlebars-template">
+			<p><strong>Common Name</strong>: {{subject.commonName}}</p>
+			<p><strong>Issuer CN</strong>: {{issuer.commonName}}</p>
+			<p><strong>From date</strong>: {{validity.fromDate}}</p>
+			<p><strong>Till date</strong>: {{validity.tillDate}}</p>
+		</script>
+
 	</body>
 </html>

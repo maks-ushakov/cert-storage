@@ -36,7 +36,7 @@ window.Certificate = (function(undefined){
 		return {
 			serialNumber: Certificate.getSerialNumber(asn),
 			issuer: Certificate.getIssuerInfo(asn),
-			validiti: Certificate.getValidity(asn),
+			validity: Certificate.getValidity(asn),
 			subject: Certificate.getSubjectInfo(asn)
 		};
 	};
