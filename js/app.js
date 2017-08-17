@@ -13,8 +13,10 @@
 	CertStorage.prototype.add = function (file, filebody) {
 		console.log(file, filebody);
 
+		var uniqName = Certificate.getUID(filebody);
+
 		try {
-			localStorage.setItem(file.name, JSON.stringify(filebody));
+			localStorage.setItem(uniqName, JSON.stringify(filebody));
 			this.keys.push(file.name);
 		} catch (e) {
 			console.error('Localstorage Error:' + e);
@@ -22,7 +24,11 @@
 	};
 
 	CertStorage.prototype.getInfo = function (key) {
-		return localStorage.getItem(key);
+		var info = JSON.parse(localStorage.getItem(key));
+		
+		console.log(Certificate.getTBSInfo(ASN1.decode(info)));
+
+		return JSON.stringify(Certificate.getSubjectInfo(ASN1.decode(info)));
 	};
 
 	window.CertStorage = CertStorage;
