@@ -27,15 +27,22 @@
 			<section id="cert__info" class="output panel panel__out cert__status-show" placeholder="Выберите сертификат для просмотра информации"></section>
 			<section id="cert__load" class="load panel panel__out cert__status-add" placeholder="Перетащите файл сертификата в это поле"></section>
 		</div>
-		<div class="message"></div>
-		<script src="js/asn1js/oids.js" defer></script>
-		<script src="js/asn1js/int10.js" defer></script>
-		<script src="js/asn1js/asn1.js" defer></script>
-		<script src="js/certificate.js" defer></script>
+		<!-- Include Libs -->
+		<script src="lib/asn1js/oids.js" defer></script>
+		<script src="lib/asn1js/int10.js" defer></script>
+		<script src="lib/asn1js/asn1.js" defer></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js" defer></script>
-		<script src="js/app.js" defer></script>
+
+		<!-- App script files -->
+		<script src="js/CertStorage/certificate.js" defer></script>
+		<script src="js/CertStorage/model.js" defer></script>
+		<script src="js/CertStorage/app.js" defer></script>
+
+		<!-- Templates -->
 		<script id="list-template" type="text/x-handlebars-template">
-		
+			<ul>
+				{#each }
+				<li data-keys="{{}}">{{}}</li>
 		</script>
 		<script id="info-template" type="text/x-handlebars-template">
 			<p><strong>Common Name</strong>: {{subject.commonName}}</p>
