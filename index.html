@@ -31,18 +31,22 @@
 		<script src="lib/asn1js/oids.js" defer></script>
 		<script src="lib/asn1js/int10.js" defer></script>
 		<script src="lib/asn1js/asn1.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.2/EventEmitter.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js" defer></script>
 
 		<!-- App script files -->
 		<script src="js/CertStorage/certificate.js" defer></script>
 		<script src="js/CertStorage/model.js" defer></script>
+		<script src="js/CertStorage/views.js" defer></script>
 		<script src="js/CertStorage/app.js" defer></script>
 
 		<!-- Templates -->
 		<script id="list-template" type="text/x-handlebars-template">
 			<ul>
-				{#each }
-				<li data-keys="{{}}">{{}}</li>
+				{{#each keys}}
+					<li data-key="{{this.key}}">{{this.fullName}}</li>
+				{{/each}}
+			</ul>
 		</script>
 		<script id="info-template" type="text/x-handlebars-template">
 			<p><strong>Common Name</strong>: {{subject.commonName}}</p>

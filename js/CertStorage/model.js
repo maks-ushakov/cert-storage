@@ -7,6 +7,7 @@ var CertStorageModel = (function(undefined){
 	function Model (options) {
 		this._options = Object.assign({}, defaultOptions, options | {});
 		this.keys = [];
+		this.sender = new EventEmitter();
 	}
 
 	// Get subject Common Name using key
@@ -34,7 +35,7 @@ var CertStorageModel = (function(undefined){
 	}
 
 	// Get list of all key in Storage
-	Model.prototype.load = function (callback) {
+	Model.prototype.load = function () {
 		for(var i = 0; i < localStorage.length; i++) {
 
 			var key = localStorage.key(i);
@@ -49,12 +50,12 @@ var CertStorageModel = (function(undefined){
 		}
 
 		this.keys.sort(byFullName);
-		
-		callback(null,this.keys);
+		this.sender.emitEvent('certData-loaded', this.keys);
 	};
 
 
 	Model.prototype.add = function (file, filebody) {
+		this.sender.emitEvent('certAdd-start');
 		try {
 			var uniqName = Certificate.getUID(filebody, this._options),
 				keys = getUIDs(this.keys);
@@ -66,8 +67,9 @@ var CertStorageModel = (function(undefined){
 			localStorage.setItem(uniqName, JSON.stringify(filebody));
 			this.keys.push(file.name);
 		} catch (e) {
-			console.error("This certificate can not be added! " + e.message)
+			this.sender.emitEvent('cert-error', [{message: "This certificate can not be added! " + (e.message || ''), error: e }]);
 		}
+		this.sender.emitEvent('certAdd-done', [this.keys]);
 	};
 
 	// Return 
@@ -76,7 +78,7 @@ var CertStorageModel = (function(undefined){
 			var info = JSON.parse(localStorage.getItem(key));
 			return Certificate.getTBSInfo(ASN1.decode(info));
 		} catch (e) {
-			console.error('Can not read certificate info')	
+			this.sender.emitEvent('cert-error', [{message: 'Can not read certificate info', error: e }])
 		}
 	};
 
