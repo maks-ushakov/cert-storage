@@ -54,8 +54,24 @@ var CertStorageModel = (function(undefined){
 	};
 
 
-	Model.prototype.add = function (file, filebody) {
-		this.sender.emitEvent('certAdd-start');
+	Model.prototype.append = function (file) {
+		var _this = this;
+		var reader = new FileReader();
+		reader.onloadend = function () {
+			if (reader.error) {
+				_this.sender.emitEvent('cert-error', [{
+					message: "Your browser couldn't read the specified file (error code " + reader.error.code + ").", 
+				error: reader.error
+				}]);
+			} else {
+				_this.add(reader.result);
+			}
+		};
+		reader.readAsBinaryString(file);
+	}
+
+
+	Model.prototype.add = function (filebody) {
 		try {
 			var uniqName = Certificate.getUID(filebody, this._options),
 				keys = getUIDs(this.keys);
@@ -65,11 +81,11 @@ var CertStorageModel = (function(undefined){
 			}
 
 			localStorage.setItem(uniqName, JSON.stringify(filebody));
-			this.keys.push(file.name);
+			this.keys.push({key: uniqName, fullName: getFullName(uniqName, this._options)});
 		} catch (e) {
 			this.sender.emitEvent('cert-error', [{message: "This certificate can not be added! " + (e.message || ''), error: e }]);
 		}
-		this.sender.emitEvent('certAdd-done', [this.keys]);
+		this.sender.emitEvent('add-certificate-done', [this.keys]);
 	};
 
 	// Return 

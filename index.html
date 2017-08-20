@@ -14,18 +14,15 @@
 	<body>
 		<div id="cert-storage" class="cert wrapper cert--show">
 			<section class="action-area panel">
-				<div id="cert__list-container" class="listarea">
-					<ul class="cert__list">
-					</ul>
+				<div id="cert__list-container" class="listarea cert__list">
 				</div>
 				<div id="cert__add" class="buttonsarea">
-					<button id="add-certificate" class="button cert__status-show">Добавить</button>
-					<button id="cancel-certificate" class="button cert__status-add">Отменить</button>
-					<input type="file" class="add_input cert__status-add" name="file">
+					<button data-action="add-certificate" class="button cert__status-show">Добавить</button>
+					<button data-action="cancel-adding" class="button cert__status-add">Отменить</button>
 				</div>
 			</section>
 			<section id="cert__info" class="output panel panel__out cert__status-show" placeholder="Выберите сертификат для просмотра информации"></section>
-			<section id="cert__load" class="load panel panel__out cert__status-add" placeholder="Перетащите файл сертификата в это поле"></section>
+			<section data-role="load-area" class="load panel panel__out cert__status-add" placeholder="Перетащите файл сертификата в это поле"></section>
 		</div>
 		<!-- Include Libs -->
 		<script src="lib/asn1js/oids.js" defer></script>
@@ -38,7 +35,11 @@
 		<script src="js/CertStorage/certificate.js" defer></script>
 		<script src="js/CertStorage/model.js" defer></script>
 		<script src="js/CertStorage/views.js" defer></script>
+		<script src="js/CertStorage/controller.js" defer></script>
 		<script src="js/CertStorage/app.js" defer></script>
+
+		<!-- Page Script -->
+		<script src="js/main.js" defer></script>
 
 		<!-- Templates -->
 		<script id="list-template" type="text/x-handlebars-template">
