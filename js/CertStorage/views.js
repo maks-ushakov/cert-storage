@@ -12,7 +12,7 @@ var CertStorageView = (function(undefined) {
 		this.model = model;
 		this.model.sender.addListener('certData-loaded', this.renderList.bind(this));
 		this.model.sender.addListener('cert-error', this.renderError);
-		this.model.sender.addListeners('add-sertificate-done', [this.renderList.bind(this), hideAddStatus.bind(this)]);
+		this.model.sender.addListeners('add-certificate-done', [this.renderList.bind(this), hideAddStatus.bind(this)]);
 
 		this.ctrl = controller;
 		this.ctrl.sender.addListener('add-certificate', showAddStatus.bind(this));
