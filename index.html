@@ -12,17 +12,17 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div id="cert-storage" class="cert wrapper cert--show">
-			<section class="action-area panel">
-				<div id="cert__list-container" class="listarea cert__list">
+		<div id="cert-storage" class="wrapper">
+			<section class="action-area panel panel__out" placeholder="У Вас еще нет добавленных сертификатов">
+				<div data-role="certificate-list" class="listarea cert__list">
 				</div>
-				<div id="cert__add" class="buttonsarea">
-					<button data-action="add-certificate" class="button cert__status-show">Добавить</button>
-					<button data-action="cancel-adding" class="button cert__status-add">Отменить</button>
+				<div class="buttonsarea">
+					<button data-action="add-certificate" class="button certificate-adding__hide">Добавить</button>
+					<button data-action="cancel-adding" class="button certificate-adding__show">Отменить</button>
 				</div>
 			</section>
-			<section id="cert__info" class="output panel panel__out cert__status-show" placeholder="Выберите сертификат для просмотра информации"></section>
-			<section data-role="load-area" class="load panel panel__out cert__status-add" placeholder="Перетащите файл сертификата в это поле"></section>
+			<section data-role="certificate-info" class="output panel panel__out certificate-adding__hide" placeholder="Выберите сертификат для просмотра информации"></section>
+			<section data-role="load-area" class="load panel panel__out certificate-adding__show" placeholder="Перетащите файл сертификата в это поле"></section>
 		</div>
 		<!-- Include Libs -->
 		<script src="lib/asn1js/oids.js" defer></script>

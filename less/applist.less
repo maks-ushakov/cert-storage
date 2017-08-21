@@ -1,5 +1,5 @@
 .cert__list {
-	max-width: 80%;
+	overflow: auto;
 	li {
 		border: 1px solid @list-border-color;
 		padding: 10px;
@@ -11,7 +11,21 @@
 			background: @list-bg-color;
 			padding-right: 30px;
 			&::after {
-				content: '';
+				content: '\f0da';
+				position: absolute;
+				right: 10px;
+				 font-family: 'icomoon' !important;
+				  speak: none;
+				  font-style: normal;
+				  font-weight: normal;
+				  font-variant: normal;
+				  text-transform: none;
+				  line-height: 1;
+
+				  /* Better Font Rendering =========== */
+				  -webkit-font-smoothing: antialiased;
+				  -moz-osx-font-smoothing: grayscale;
+
 			}
 		}
 	}
