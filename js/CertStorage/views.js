@@ -6,6 +6,13 @@ var CertStorageView = (function(undefined) {
 
 	var root;
 
+	/**
+	 * @class
+	 *
+	 * @param (CertStorageModel) model
+	 * @param (CertStorageContoller) controller
+	 * @param (Object) [optional] options
+	 */
 	function CertStorageView (model, controller, options) {
 		this._options = Object.assign({}, defaultOptions, options);
 		root = this._options.root;
@@ -51,15 +58,25 @@ var CertStorageView = (function(undefined) {
 		target.innerHTML = template(data);
 	}
 	
+	/**
+	 * Render list of certificates
+	 */
 	CertStorageView.prototype.renderList = function () {
 		var list = this._options.list;
 		outData(list, this._options.templateList,{keys: this.model.keys});
 	};
 
+	/**
+	 * Show Certificate Info
+	 */
 	CertStorageView.prototype.renderInfo = function (key) {
 		var context = this.model.getInfo(key);
 		outData(this._options.output, this._options.templateInfo, context);
 	}
+
+	/**
+	 * Show Errors
+	 */
 
 	CertStorageView.prototype.renderError = function (err) {
 		alert('Certificate Storage Error:\n' + err.message)
